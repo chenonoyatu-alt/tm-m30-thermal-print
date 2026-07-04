@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>印刷手順 - TM-m30</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; margin: 24px; color:#111; background:#fafafa; }
+    .card { background:white; border:1px solid #e5e5e5; border-radius:12px; padding:16px; margin:14px 0; }
+    .btn { display:inline-block; padding:10px 14px; border-radius:10px; background:#111; color:white; text-decoration:none; cursor:pointer; border:none; }
+    a.btn.secondary { background:#fff; color:#111; border:1px solid #ddd; }
+    .muted { color:#666; font-size:14px; }
+    img { max-width: 100%; height:auto; display:block; margin-top:10px; background:#fff; border:1px solid #eee; }
+    ol { margin: 8px 0 0 18px; }
+  </style>
+</head>
+<body>
+  <h1 style="margin:0 0 10px;">② 印刷</h1>
+  <p class="muted">選択した画像を表示し、ブラウザの印刷を呼び出します。</p>
+
+  <div class="card">
+    <h2>印刷用プレビュー</h2>
+    <div class="muted" id="msg">画像が見つかるまで少々お待ちください…</div>
+    <img id="preview" alt="印刷プレビュー" style="display:none;" />
+  </div>
+
+  <div class="card">
+    <h2>手順</h2>
+    <ol>
+      <li>プリンター（EPSON TM-m30）の電源・接続を確認</li>
+      <li>このページの「印刷」ボタンを押す</li>
+      <li>印刷ダイアログで用紙サイズ・余白を確認（可能なら最小/余白なし）</li>
+      <li>印刷プレビューで回転・位置ズレがないか確認</li>
+    </ol>
+    <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+      <button id="printBtn" class="btn" type="button">🖨️ このページを印刷</button>
+      <a class="btn secondary" href="index.html">← トップへ</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>ポイント</h2>
+    <ul>
+      <li>初回はテスト印刷（1枚）推奨</li>
+      <li>画像が荒い場合は、元画像を軽く大きめに用意</li>
+    </ul>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const img = params.get('img');
+    const preview = document.getElementById('preview');
+    const msg = document.getElementById('msg');
+    const printBtn = document.getElementById('printBtn');
+
+    if (!img) {
+      msg.textContent = '画像が見つかりません。トップページから画像を選び直してください。';
+      printBtn.disabled = true;
+      printBtn.style.opacity = 0.6;
+    } else {
+      preview.src = img;
+      preview.style.display = 'block';
+      msg.remove();
+    }
+
+    printBtn.addEventListener('click', () => {
+      // 余白/サイズはブラウザ側の印刷設定に依存します
+      // できるだけシンプルに「画像だけ印刷」に寄せます
+      window.print();
+    });
+  </script>
+</body>
+</html>
