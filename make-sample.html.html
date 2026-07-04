@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>Sample PNG Maker</title>
+</head>
+<body>
+  <button id="btn">sample.png を保存</button>
+
+  <script>
+    // 256x64 の “TEST” っぽい単純画像（軽量）
+    // ※ここでは小さなPNGをbase64で持ってます
+    const base64Png =
+      "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAACXBIWXMAAAsSAAALEgHS3X78AAABQElEQVR4nO2aMQ7CMAxFv5bYB0kQHkRkG1o0yJr0Cw6w2w2g7wQxqv8Q0qk1t2o7g3gkz9w5kqg2nqgGm1dQKZpQGm8i6x0m8wz7Qw1wQm3kqgCwVwC3wKpQHc6gqg0n8oQwVwE7w3bYyqvEwE5wH4yXw7gkqYxQb8h3m0c1r4wA1mQpGQAAAABJRU5ErkJggg==";
+
+    document.getElementById("btn").addEventListener("click", () => {
+      const link = document.createElement("a");
+      link.href = "data:image/png;base64," + base64Png;
+      link.download = "sample.png";
+      link.click();
+    });
+  </script>
+</body>
+</html>
